@@ -1,0 +1,380 @@
+{
+  "info": {
+    "name": "API Classificação E-mails",
+    "description": "Collection para testar a API de Classificação de E-mails com IA",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080/api",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/classificar/health",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "health"]
+        },
+        "description": "Verifica se a API está funcionando"
+      },
+      "response": []
+    },
+    {
+      "name": "2. Informações do Modelo",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/classificar/modelo/info",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "modelo", "info"]
+        },
+        "description": "Obtém informações sobre o modelo de IA"
+      },
+      "response": []
+    },
+    {
+      "name": "3. Classificar E-mail - ATENDIMENTO",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"remetente\": \"cliente@exemplo.com\",\n  \"destinatario\": \"contato@empresa.com\",\n  \"assunto\": \"Problema com sistema de login\",\n  \"corpo\": \"Olá, não consigo acessar minha conta. Aparece erro de senha inválida. Preciso de ajuda urgente.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/classificar/email",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "email"]
+        },
+        "description": "Classifica um e-mail de atendimento (problema técnico)"
+      },
+      "response": []
+    },
+    {
+      "name": "4. Classificar E-mail - FINANCEIRO",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"remetente\": \"financeiro@fornecedor.com\",\n  \"destinatario\": \"contato@empresa.com\",\n  \"assunto\": \"Fatura #2024-001 - Serviços de Cloud\",\n  \"corpo\": \"Segue em anexo a fatura referente aos serviços de cloud do mês de janeiro. Valor: R$ 1.250,00. Vencimento: 15/02/2024.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/classificar/email",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "email"]
+        },
+        "description": "Classifica um e-mail financeiro (fatura/cobrança)"
+      },
+      "response": []
+    },
+    {
+      "name": "5. Classificar E-mail - RH",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"remetente\": \"candidato@exemplo.com\",\n  \"destinatario\": \"contato@empresa.com\",\n  \"assunto\": \"Currículo - Desenvolvedor Full Stack\",\n  \"corpo\": \"Segue em anexo meu currículo para a vaga de desenvolvedor full stack. Tenho 5 anos de experiência em Java, Spring Boot e React.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/classificar/email",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "email"]
+        },
+        "description": "Classifica um e-mail de RH (currículo/vaga)"
+      },
+      "response": []
+    },
+    {
+      "name": "6. Classificar E-mail - COMPRAS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"remetente\": \"fornecedor@dell.com\",\n  \"destinatario\": \"contato@empresa.com\",\n  \"assunto\": \"Cotação - 50 notebooks Dell Latitude\",\n  \"corpo\": \"Prezados, segue nossa proposta comercial para 50 notebooks Dell Latitude 5520. Preço unitário: R$ 3.500,00. Entrega em 30 dias.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/classificar/email",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "email"]
+        },
+        "description": "Classifica um e-mail de compras (cotação/fornecedor)"
+      },
+      "response": []
+    },
+    {
+      "name": "7. Classificar E-mail - VENDAS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"remetente\": \"prospecto@empresa.com\",\n  \"destinatario\": \"contato@empresa.com\",\n  \"assunto\": \"Interesse em consultoria de segurança\",\n  \"corpo\": \"Gostaríamos de conhecer seus serviços de consultoria em segurança da informação. Podemos agendar uma reunião para discutir nossas necessidades?\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/classificar/email",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "email"]
+        },
+        "description": "Classifica um e-mail de vendas (proposta/consultoria)"
+      },
+      "response": []
+    },
+    {
+      "name": "8. Classificar E-mail - JURIDICO",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"remetente\": \"advogado@escritorio.com\",\n  \"destinatario\": \"contato@empresa.com\",\n  \"assunto\": \"Revisão de contrato de serviços\",\n  \"corpo\": \"Precisamos revisar as cláusulas do contrato de prestação de serviços. Há alguns pontos que precisam ser ajustados para conformidade legal.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/classificar/email",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "email"]
+        },
+        "description": "Classifica um e-mail jurídico (contrato/legal)"
+      },
+      "response": []
+    },
+    {
+      "name": "9. Classificar E-mail - MARKETING",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"remetente\": \"eventos@tecnologia.com\",\n  \"destinatario\": \"contato@empresa.com\",\n  \"assunto\": \"Convite - Conferência de Tecnologia 2024\",\n  \"corpo\": \"Convidamos sua empresa para participar da maior conferência de tecnologia do Brasil. Será uma excelente oportunidade para networking e divulgação.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/classificar/email",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "email"]
+        },
+        "description": "Classifica um e-mail de marketing (evento/parceria)"
+      },
+      "response": []
+    },
+    {
+      "name": "10. Classificar E-mail - TI",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"remetente\": \"ti@empresa.com\",\n  \"destinatario\": \"contato@empresa.com\",\n  \"assunto\": \"Problema crítico no servidor de produção\",\n  \"corpo\": \"O servidor principal está apresentando instabilidade. Precisamos de suporte técnico urgente para resolver o problema de conectividade.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/classificar/email",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "email"]
+        },
+        "description": "Classifica um e-mail de TI (problema técnico/sistema)"
+      },
+      "response": []
+    },
+    {
+      "name": "11. Classificar E-mail - OPERACOES",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"remetente\": \"operacoes@empresa.com\",\n  \"destinatario\": \"contato@empresa.com\",\n  \"assunto\": \"Atualização de estoque - Produto XYZ\",\n  \"corpo\": \"Informamos que o produto XYZ está com estoque baixo. Precisamos fazer um novo pedido para manter o fornecimento aos clientes.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/classificar/email",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "email"]
+        },
+        "description": "Classifica um e-mail de operações (estoque/logística)"
+      },
+      "response": []
+    },
+    {
+      "name": "12. Classificar Apenas Texto - ATENDIMENTO",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"texto\": \"Problema com sistema de login, não consigo acessar minha conta\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/classificar/texto",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "texto"]
+        },
+        "description": "Classifica apenas um texto de atendimento"
+      },
+      "response": []
+    },
+    {
+      "name": "13. Classificar Apenas Texto - FINANCEIRO",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"texto\": \"Fatura #2024-001, valor R$ 1.250,00, vencimento 15/02/2024\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/classificar/texto",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "texto"]
+        },
+        "description": "Classifica apenas um texto financeiro"
+      },
+      "response": []
+    },
+    {
+      "name": "14. Classificar Apenas Texto - RH",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"texto\": \"Currículo para vaga de desenvolvedor, 5 anos de experiência\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/classificar/texto",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "texto"]
+        },
+        "description": "Classifica apenas um texto de RH"
+      },
+      "response": []
+    },
+    {
+      "name": "15. Testar Cenários Automáticos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/classificar/testar-cenarios",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "testar-cenarios"]
+        },
+        "description": "Executa testes automáticos com cenários pré-definidos"
+      },
+      "response": []
+    },
+    {
+      "name": "16. Validação - E-mail Vazio",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{base_url}}/classificar/email",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "email"]
+        },
+        "description": "Testa validação de e-mail sem dados obrigatórios"
+      },
+      "response": []
+    },
+    {
+      "name": "17. Validação - Texto Vazio",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"texto\": \"\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/classificar/texto",
+          "host": ["{{base_url}}"],
+          "path": ["classificar", "texto"]
+        },
+        "description": "Testa validação de texto vazio"
+      },
+      "response": []
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+# Configurações do servidor
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+# Configurações da aplicação
+spring:
+  application:
+    name: API de Classificação de E-mails com IA Real
+
+# Configurações de logging
+logging:
+  level:
+    br.com.techcorp: INFO
+    org.springframework.web: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# Configurações da API
+app:
+  # Setores disponíveis para classificação
+  setores:
+    - ATENDIMENTO
+    - FINANCEIRO
+    - COMPRAS
+    - VENDAS
+    - RH
+    - JURIDICO
+    - MARKETING
+    - TI
+    - OPERACOES
+
+  # Configurações de classificação
+  classificacao:
+    limite-confianca: 0.7
+    setor-padrao: ATENDIMENTO
+    versao-modelo: "1.0.0"
+
+# Configurações da IA HuggingFace
+ai:
+  huggingface:
+    # Modelo base para classificação
+    modelo: "neuralmind/bert-base-portuguese-cased"
+    
+    # Configurações do modelo
+    max-length: 512
+    truncation: true
+    padding: true
+    
+    # Diretório para armazenar modelos baixados
+    diretorio-modelos: "modelos-ia"
+    
+    # Timeout para carregamento (em segundos)
+    timeout-carregamento: 30
+    
+    # Configurações de cache
+    cache-modelos: true
+    cache-size: 100
+    
+    # Configurações de precisão
+    precisao-esperada: 0.92
+    confianca-minima: 0.7
