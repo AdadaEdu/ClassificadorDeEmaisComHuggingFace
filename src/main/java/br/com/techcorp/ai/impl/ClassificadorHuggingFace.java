@@ -4,7 +4,10 @@ import br.com.techcorp.ai.ClassificadorEmails;
 import br.com.techcorp.models.Email;
 import br.com.techcorp.models.ResultadoClassificacao;
 import br.com.techcorp.models.SetorEmail;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,6 +24,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Component
 public class ClassificadorHuggingFace implements ClassificadorEmails {
+
+    private static final Logger logger = LoggerFactory.getLogger(ClassificadorHuggingFace.class);
+    
+    @Autowired
+    private HuggingFaceService huggingFaceService;
 
     // Cache para modelos carregados
     private static final Map<String, Object> MODELOS_CARREGADOS = new ConcurrentHashMap<>();
@@ -269,17 +277,28 @@ public class ClassificadorHuggingFace implements ClassificadorEmails {
         }
 
         try {
-            // Se o modelo não estiver carregado, usar fallback
+            // Tentar usar o modelo real da HuggingFace primeiro
+            if (huggingFaceService != null && huggingFaceService.isServidorDisponivel()) {
+                logger.info("🤖 Usando modelo real da HuggingFace para classificação");
+                ResultadoClassificacao resultado = huggingFaceService.classificarComHuggingFace(texto);
+                
+                if (resultado != null) {
+                    return resultado;
+                }
+            }
+            
+            // Se HuggingFace não estiver disponível, usar modelo local
             if (!modeloCarregado) {
+                logger.info("🔄 HuggingFace indisponível, usando modelo local...");
                 return classificarComFallback(texto);
             }
 
-            // Classificação com modelo avançado de IA
+            // Classificação com modelo local avançado
             return classificarComModeloAvancado(texto);
 
         } catch (Exception e) {
-            System.err.println("❌ Erro na classificação com IA: " + e.getMessage());
-            System.err.println("🔄 Usando classificador de fallback...");
+            logger.error("❌ Erro na classificação com IA: {}", e.getMessage());
+            logger.info("🔄 Usando classificador de fallback...");
             
             // Fallback para o classificador baseado em regras
             return classificarComFallback(texto);
@@ -545,7 +564,24 @@ public class ClassificadorHuggingFace implements ClassificadorEmails {
      */
     public Map<String, Object> getInfoModelo() {
         Map<String, Object> info = new HashMap<>();
-        info.put("tipo", "IA Avançada com Análise Semântica");
+        
+        // Tentar obter informações do modelo real da HuggingFace
+        if (huggingFaceService != null && huggingFaceService.isServidorDisponivel()) {
+            Map<String, Object> infoHuggingFace = huggingFaceService.getInfoModelo();
+            if (infoHuggingFace != null) {
+                info.put("tipo", "HuggingFace Transformers (Modelo Real)");
+                info.put("modelo", infoHuggingFace.get("modelo"));
+                info.put("carregado", infoHuggingFace.get("carregado"));
+                info.put("dispositivo", infoHuggingFace.get("dispositivo"));
+                info.put("setoresSuportados", infoHuggingFace.get("setores_suportados"));
+                info.put("urlServidor", huggingFaceService.getServerUrl());
+                info.put("status", "Conectado ao servidor Python");
+                return info;
+            }
+        }
+        
+        // Informações do modelo local
+        info.put("tipo", "IA Avançada com Análise Semântica (Local)");
         info.put("modelo", "Sistema de Classificação Inteligente");
         info.put("carregado", modeloCarregado);
         info.put("precisao", precisao);
@@ -554,6 +590,8 @@ public class ClassificadorHuggingFace implements ClassificadorEmails {
         info.put("urlModelo", URL_MODELO);
         info.put("algoritmo", "Análise Semântica + Machine Learning");
         info.put("palavrasChave", PESOS_IA.size());
+        info.put("status", "Servidor HuggingFace não disponível - usando modelo local");
+        
         return info;
     }
 }

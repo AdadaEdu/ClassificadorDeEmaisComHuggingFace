@@ -41,7 +41,7 @@ app:
 ai:
   huggingface:
     # Modelo base para classificação
-    modelo: "neuralmind/bert-base-portuguese-cased"
+    modelo: "microsoft/mdeberta-v3-base"
     
     # Configurações do modelo
     max-length: 512
@@ -61,3 +61,10 @@ ai:
     # Configurações de precisão
     precisao-esperada: 0.92
     confianca-minima: 0.7
+
+# Configurações do servidor Python da HuggingFace
+huggingface:
+  server:
+    url: "http://localhost:5000"
+    timeout: 10000
+    retry-attempts: 3
