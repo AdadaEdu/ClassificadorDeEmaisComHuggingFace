@@ -16,7 +16,8 @@ import java.util.regex.Pattern;
  * e-mails por setor. É uma solução acadêmica que demonstra
  * os conceitos de classificação de texto.
  * 
- * @Primary - Usado como fallback quando o classificador principal não está disponível
+ * @Primary - Usado como fallback quando o classificador principal não está
+ *          disponível
  */
 @Component
 @Primary
@@ -24,7 +25,7 @@ public class ClassificadorBaseadoEmRegras implements ClassificadorEmails {
 
     // Mapa de palavras-chave para cada setor
     private static final Map<SetorEmail, List<String>> PALAVRAS_CHAVE = new HashMap<>();
-    
+
     // Mapa de padrões regex para casos específicos
     private static final Map<SetorEmail, List<Pattern>> PADROES = new HashMap<>();
 
@@ -35,80 +36,69 @@ public class ClassificadorBaseadoEmRegras implements ClassificadorEmails {
     static {
         // Palavras-chave para ATENDIMENTO
         PALAVRAS_CHAVE.put(SetorEmail.ATENDIMENTO, Arrays.asList(
-            "problema", "erro", "bug", "não funciona", "ajuda", "suporte", "assistência",
-            "dúvida", "questão", "falha", "defeito", "travando", "lento", "crash",
-            "não consigo", "preciso de ajuda", "como fazer", "instruções"
-        ));
+                "problema", "erro", "bug", "não funciona", "ajuda", "suporte", "assistência",
+                "dúvida", "questão", "falha", "defeito", "travando", "lento", "crash",
+                "não consigo", "preciso de ajuda", "como fazer", "instruções"));
 
         // Palavras-chave para FINANCEIRO
         PALAVRAS_CHAVE.put(SetorEmail.FINANCEIRO, Arrays.asList(
-            "fatura", "boleto", "pagamento", "cobrança", "invoice", "conta", "valor",
-            "preço", "orçamento", "financeiro", "contabilidade", "imposto", "taxa",
-            "vencimento", "multa", "juros", "desconto", "reembolso", "estorno"
-        ));
+                "fatura", "boleto", "pagamento", "cobrança", "invoice", "conta", "valor",
+                "preço", "orçamento", "financeiro", "contabilidade", "imposto", "taxa",
+                "vencimento", "multa", "juros", "desconto", "reembolso", "estorno"));
 
         // Palavras-chave para COMPRAS
         PALAVRAS_CHAVE.put(SetorEmail.COMPRAS, Arrays.asList(
-            "cotação", "orçamento", "fornecedor", "produto", "equipamento", "material",
-            "compra", "aquisição", "proposta", "preço", "quantidade", "entrega",
-            "fornecimento", "pedido", "solicitação", "comparativo", "melhor preço"
-        ));
+                "cotação", "orçamento", "fornecedor", "produto", "equipamento", "material",
+                "compra", "aquisição", "proposta", "preço", "quantidade", "entrega",
+                "fornecimento", "pedido", "solicitação", "comparativo", "melhor preço"));
 
         // Palavras-chave para VENDAS
         PALAVRAS_CHAVE.put(SetorEmail.VENDAS, Arrays.asList(
-            "proposta", "orçamento", "cliente", "venda", "consultoria", "serviço",
-            "interesse", "demonstração", "apresentação", "comercial", "negócio",
-            "parceria", "contrato", "proposta comercial", "preços", "condições"
-        ));
+                "proposta", "orçamento", "cliente", "venda", "consultoria", "serviço",
+                "interesse", "demonstração", "apresentação", "comercial", "negócio",
+                "parceria", "contrato", "proposta comercial", "preços", "condições"));
 
         // Palavras-chave para RH
         PALAVRAS_CHAVE.put(SetorEmail.RH, Arrays.asList(
-            "currículo", "cv", "vaga", "emprego", "seleção", "candidato", "recrutamento",
-            "trabalho", "carreira", "oportunidade", "entrevista", "contratação",
-            "benefícios", "salário", "horário", "folha de pagamento", "férias"
-        ));
+                "currículo", "cv", "vaga", "emprego", "seleção", "candidato", "recrutamento",
+                "trabalho", "carreira", "oportunidade", "entrevista", "contratação",
+                "benefícios", "salário", "horário", "folha de pagamento", "férias"));
 
         // Palavras-chave para JURIDICO
         PALAVRAS_CHAVE.put(SetorEmail.JURIDICO, Arrays.asList(
-            "contrato", "acordo", "legal", "processo", "advogado", "jurídico", "lei",
-            "cláusula", "termo", "obrigação", "direito", "responsabilidade",
-            "litígio", "arbitragem", "conformidade", "regulamentação", "auditoria"
-        ));
+                "contrato", "acordo", "legal", "processo", "advogado", "jurídico", "lei",
+                "cláusula", "termo", "obrigação", "direito", "responsabilidade",
+                "litígio", "arbitragem", "conformidade", "regulamentação", "auditoria"));
 
         // Palavras-chave para MARKETING
         PALAVRAS_CHAVE.put(SetorEmail.MARKETING, Arrays.asList(
-            "evento", "parceria", "divulgação", "campanha", "publicidade", "mídia",
-            "promoção", "lançamento", "conferência", "workshop", "palestra",
-            "redes sociais", "branding", "posicionamento", "mercado", "público-alvo"
-        ));
+                "evento", "parceria", "divulgação", "campanha", "publicidade", "mídia",
+                "promoção", "lançamento", "conferência", "workshop", "palestra",
+                "redes sociais", "branding", "posicionamento", "mercado", "público-alvo"));
 
         // Palavras-chave para TI
         PALAVRAS_CHAVE.put(SetorEmail.TI, Arrays.asList(
-            "sistema", "software", "aplicação", "desenvolvimento", "programação",
-            "banco de dados", "servidor", "rede", "infraestrutura", "tecnologia",
-            "manutenção", "atualização", "backup", "segurança", "firewall"
-        ));
+                "sistema", "software", "aplicação", "desenvolvimento", "programação",
+                "banco de dados", "servidor", "rede", "infraestrutura", "tecnologia",
+                "manutenção", "atualização", "backup", "segurança", "firewall"));
 
         // Palavras-chave para OPERACOES
         PALAVRAS_CHAVE.put(SetorEmail.OPERACOES, Arrays.asList(
-            "logística", "estoque", "produção", "qualidade", "processo", "operacional",
-            "manutenção", "equipamento", "facilidade", "armazém", "distribuição",
-            "planejamento", "execução", "monitoramento", "controle"
-        ));
+                "logística", "estoque", "produção", "qualidade", "processo", "operacional",
+                "manutenção", "equipamento", "facilidade", "armazém", "distribuição",
+                "planejamento", "execução", "monitoramento", "controle"));
 
         // Padrões regex para casos específicos
         PADROES.put(SetorEmail.FINANCEIRO, Arrays.asList(
-            Pattern.compile("fatura\\s*#?\\d+", Pattern.CASE_INSENSITIVE),
-            Pattern.compile("boleto\\s*\\d+", Pattern.CASE_INSENSITIVE),
-            Pattern.compile("\\$\\s*\\d+[.,]\\d{2}", Pattern.CASE_INSENSITIVE),
-            Pattern.compile("r\\$\\s*\\d+[.,]\\d{2}", Pattern.CASE_INSENSITIVE)
-        ));
+                Pattern.compile("fatura\\s*#?\\d+", Pattern.CASE_INSENSITIVE),
+                Pattern.compile("boleto\\s*\\d+", Pattern.CASE_INSENSITIVE),
+                Pattern.compile("\\$\\s*\\d+[.,]\\d{2}", Pattern.CASE_INSENSITIVE),
+                Pattern.compile("r\\$\\s*\\d+[.,]\\d{2}", Pattern.CASE_INSENSITIVE)));
 
         PADROES.put(SetorEmail.RH, Arrays.asList(
-            Pattern.compile("cv\\s*\\.", Pattern.CASE_INSENSITIVE),
-            Pattern.compile("currículo", Pattern.CASE_INSENSITIVE),
-            Pattern.compile("vaga\\s+para", Pattern.CASE_INSENSITIVE)
-        ));
+                Pattern.compile("cv\\s*\\.", Pattern.CASE_INSENSITIVE),
+                Pattern.compile("currículo", Pattern.CASE_INSENSITIVE),
+                Pattern.compile("vaga\\s+para", Pattern.CASE_INSENSITIVE)));
     }
 
     @Override
@@ -122,15 +112,14 @@ public class ClassificadorBaseadoEmRegras implements ClassificadorEmails {
         // Validação de entrada
         if (texto == null || texto.trim().isEmpty()) {
             return new ResultadoClassificacao(
-                SetorEmail.ATENDIMENTO, 
-                0.5, 
-                "Texto vazio - setor padrão aplicado"
-            );
+                    SetorEmail.ATENDIMENTO,
+                    0.5,
+                    "Texto vazio - setor padrão aplicado");
         }
 
         // Normalização do texto para análise
         String textoNormalizado = normalizarTexto(texto);
-        
+
         // Cálculo dos scores para cada setor
         Map<SetorEmail, Double> scores = calcularScores(textoNormalizado);
 
@@ -152,7 +141,8 @@ public class ClassificadorBaseadoEmRegras implements ClassificadorEmails {
     }
 
     /**
-     * Normaliza o texto removendo acentos, caracteres especiais e padronizando espaços
+     * Normaliza o texto removendo acentos, caracteres especiais e padronizando
+     * espaços
      */
     private String normalizarTexto(String texto) {
         return texto.toLowerCase()

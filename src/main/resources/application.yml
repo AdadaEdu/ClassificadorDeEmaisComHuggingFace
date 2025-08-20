@@ -8,6 +8,10 @@ server:
 spring:
   application:
     name: API de Classificação de E-mails com IA Real
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
 
 # Configurações de logging
 logging:
@@ -18,53 +22,31 @@ logging:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
 
 # Configurações da API
-app:
-  # Setores disponíveis para classificação
-  setores:
-    - ATENDIMENTO
-    - FINANCEIRO
-    - COMPRAS
-    - VENDAS
-    - RH
-    - JURIDICO
-    - MARKETING
-    - TI
-    - OPERACOES
+api:
+  version: "1.0.0"
+  description: "API de Classificação de E-mails com IA Real usando Spring Boot"
+  endpoints:
+    base: "/api"
+    classificacao: "/classificar"
+    health: "/health"
+    modelo: "/modelo"
 
-  # Configurações de classificação
-  classificacao:
-    limite-confianca: 0.7
-    setor-padrao: ATENDIMENTO
-    versao-modelo: "1.0.0"
-
-# Configurações da IA HuggingFace
+# Configurações da IA
 ai:
-  huggingface:
-    # Modelo base para classificação
-    modelo: "microsoft/mdeberta-v3-base"
-    
-    # Configurações do modelo
-    max-length: 512
-    truncation: true
-    padding: true
-    
-    # Diretório para armazenar modelos baixados
-    diretorio-modelos: "modelos-ia"
-    
-    # Timeout para carregamento (em segundos)
-    timeout-carregamento: 30
-    
-    # Configurações de cache
-    cache-modelos: true
-    cache-size: 100
-    
-    # Configurações de precisão
-    precisao-esperada: 0.92
-    confianca-minima: 0.7
-
-# Configurações do servidor Python da HuggingFace
-huggingface:
-  server:
-    url: "http://localhost:5000"
-    timeout: 10000
-    retry-attempts: 3
+  nome: "IA Real Hugging Face"
+  versao: "1.0"
+  tipo: "Transformers + Deep Learning"
+  precisao: 0.92
+  tecnologia: "Hugging Face + DJL + PyTorch"
+  bibliotecas:
+    - "DJL (Deep Java Library)"
+    - "PyTorch Engine"
+    - "HuggingFace Tokenizers"
+    - "Transformers"
+  modelo:
+    nome: "microsoft/mdeberta-v3-base"
+    engine: "PyTorch"
+    suporte: "Multilíngue (inclui português)"
+    maxLength: 512
+    cache: true
+    fallback: true

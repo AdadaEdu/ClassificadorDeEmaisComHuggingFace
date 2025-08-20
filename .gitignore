@@ -15,7 +15,6 @@ buildNumber.properties
 *.iws
 *.iml
 *.ipr
-.vscode/
 *.swp
 *.swo
 *~
@@ -28,20 +27,6 @@ buildNumber.properties
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-# Python (excluir ambiente virtual e cache)
-huggingface_env/
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-*.log
 
 # HuggingFace cache
 .cache/
